@@ -1,16 +1,19 @@
 # lazscheduler-db
 lazscheduler database
-++dependences
+######dependences
 Zeosdb 
 
-++lazScheduler.conf example mariadb/mysql
+######lazScheduler.conf example mariadb/mysql
+```
 dbc.url=zdbc:MariaDB-5://localhost:3306/<database>?username=<username>;password=<password>
 logger.trigger=Info
 parallel=1
 execute-after-connection=SET NAMES utf8;SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))
 table-prefix=oc_
+```
 
-++tables on database example mariadb/mysql
+######tables on database example mariadb/mysql
+
 ```sql
 CREATE TABLE `<table-prefix>scheduler` (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
