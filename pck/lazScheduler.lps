@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="17">
+      <Unit0>
+        <Filename Value="lazScheduler.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="34" Y="12"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="256"/>
+        <CursorPos Y="272"/>
+        <ExtraEditorCount Value="1"/>
+        <ExtraEditor1>
+          <IsVisibleTab Value="True"/>
+          <WindowIndex Value="1"/>
+          <TopLine Value="52"/>
+          <CursorPos X="25" Y="74"/>
+        </ExtraEditor1>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\src\scheduler.mapper.pas"/>
+        <ComponentName Value="DaemonMapper1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="13"/>
+        <UsageCount Value="18"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\programmi\lazarus_2.0.6_fpc_3.0.4\fpc\3.0.4\source\packages\fcl-extra\src\daemonapp.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="260"/>
+        <CursorPos X="3" Y="77"/>
+        <UsageCount Value="8"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\programmi\lazarus_2.0.6_fpc_3.0.4\fpc\3.0.4\source\packages\fcl-base\src\custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="271"/>
+        <CursorPos X="3" Y="276"/>
+        <UsageCount Value="9"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\plain\ZPlainLoader.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="203"/>
+        <CursorPos X="45" Y="239"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMySqlUtils.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="292"/>
+        <CursorPos Y="310"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\bin\x86_64-win64\lazScheduler.conf"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="23"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcIntfs.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="1756"/>
+        <CursorPos Y="1774"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMySqlStatement.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="337"/>
+        <CursorPos Y="355"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMetadata.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2896"/>
+        <CursorPos Y="2914"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMySqlMetadata.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1097"/>
+        <CursorPos Y="1114"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="C:\programmi\lazarus_2.0.6_fpc_3.0.4\fpc\3.0.4\source\rtl\inc\objpash.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="176"/>
+        <CursorPos X="23" Y="194"/>
+        <UsageCount Value="9"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\programmi\lazarus_2.0.6_fpc_3.0.4\fpc\3.0.4\source\rtl\inc\systemh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="691"/>
+        <CursorPos X="3" Y="709"/>
+        <UsageCount Value="10"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMySqlResultSet.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="436"/>
+        <CursorPos Y="454"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="C:\programmi\lazarus_2.0.6_fpc_3.0.4\fpc\3.0.4\source\packages\rtl-objpas\src\inc\dateutil.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="245"/>
+        <CursorPos X="10" Y="263"/>
+        <UsageCount Value="10"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="C:\programmi\lazarus_2.0.6_fpc_3.0.4\fpc\3.0.4\source\rtl\inc\threadh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="144"/>
+        <CursorPos X="11" Y="162"/>
+        <UsageCount Value="10"/>
+      </Unit16>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="392" TopLine="381"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="397" TopLine="381"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="449" TopLine="413"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="399" TopLine="387"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="389" TopLine="381"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="390" TopLine="381"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="391" TopLine="381"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="392" TopLine="381"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="397" TopLine="381"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="449" TopLine="413"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="404" TopLine="377"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="405" TopLine="377"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="406" TopLine="377"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="388" TopLine="377"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="389" TopLine="377"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="390" TopLine="377"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="391" TopLine="377"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="392" TopLine="377"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="397" TopLine="377"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="449" TopLine="413"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="404" TopLine="387"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="405" TopLine="387"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="406" TopLine="387"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="388" TopLine="380"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="272" Column="2" TopLine="251"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="59" TopLine="41"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="272" TopLine="263"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="59" TopLine="41"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="350" Column="52" TopLine="336"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\src\scheduler.application.pas"/>
+        <Caret Line="277" Column="23" TopLine="256"/>
+      </Position30>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="1" ActiveMode="default">
+        <Mode0 Name="default">
+          <local>
+            <WorkingDirectory Value="C:\Lavoro\Lazarus\projects\shared\paxtibi\lazscheduler-db\bin\x86_64-win64"/>
+          </local>
+        </Mode0>
+      </Modes>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
