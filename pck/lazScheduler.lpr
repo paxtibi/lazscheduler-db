@@ -1,7 +1,12 @@
 program lazScheduler;
 
-uses {$IFDEF UNIX} {$IFDEF UseCThreads}
-  CThreads, {$ENDIF} {$ENDIF}
+
+{$DEFINE UseCThreads}
+
+uses {$IFDEF UNIX}
+
+     {$IFDEF UseCThreads}CThreads, {$ENDIF}
+     {$ENDIF}
   scheduler.application,
   zcore,
   zdbc,

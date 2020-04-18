@@ -3,27 +3,27 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="11"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="Debug"/>
     <Units Count="17">
       <Unit0>
         <Filename Value="lazScheduler.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
-        <CursorPos X="34" Y="12"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="21" Y="4"/>
         <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\src\scheduler.application.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="256"/>
-        <CursorPos Y="272"/>
+        <CursorPos X="34" Y="271"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <IsVisibleTab Value="True"/>
           <WindowIndex Value="1"/>
-          <TopLine Value="52"/>
+          <TopLine Value="51"/>
           <CursorPos X="25" Y="74"/>
         </ExtraEditor1>
         <UsageCount Value="30"/>
@@ -59,7 +59,6 @@
         <TopLine Value="203"/>
         <CursorPos X="45" Y="239"/>
         <UsageCount Value="9"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMySqlUtils.pas"/>
@@ -67,7 +66,6 @@
         <TopLine Value="292"/>
         <CursorPos Y="310"/>
         <UsageCount Value="11"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\bin\x86_64-win64\lazScheduler.conf"/>
@@ -78,12 +76,10 @@
       </Unit7>
       <Unit8>
         <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcIntfs.pas"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1756"/>
         <CursorPos Y="1774"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMySqlStatement.pas"/>
@@ -91,7 +87,6 @@
         <TopLine Value="337"/>
         <CursorPos Y="355"/>
         <UsageCount Value="9"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit9>
       <Unit10>
         <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMetadata.pas"/>
@@ -99,7 +94,6 @@
         <TopLine Value="2896"/>
         <CursorPos Y="2914"/>
         <UsageCount Value="9"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit10>
       <Unit11>
         <Filename Value="..\..\..\..\..\librerie installate\zeos-lib-7.2.6.1\src\dbc\ZDbcMySqlMetadata.pas"/>
@@ -107,7 +101,6 @@
         <TopLine Value="1097"/>
         <CursorPos Y="1114"/>
         <UsageCount Value="9"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit11>
       <Unit12>
         <Filename Value="C:\programmi\lazarus_2.0.6_fpc_3.0.4\fpc\3.0.4\source\rtl\inc\objpash.inc"/>
@@ -129,7 +122,6 @@
         <TopLine Value="436"/>
         <CursorPos Y="454"/>
         <UsageCount Value="10"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit14>
       <Unit15>
         <Filename Value="C:\programmi\lazarus_2.0.6_fpc_3.0.4\fpc\3.0.4\source\packages\rtl-objpas\src\inc\dateutil.inc"/>

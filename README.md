@@ -10,6 +10,10 @@ logger.trigger=Info
 parallel=1
 execute-after-connection=SET NAMES utf8;SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))
 table-prefix=oc_
+# maxloops -1 = forever, set e.g. to 2 to get stop after 2 iterations
+maxloops=-1
+# seconds to wait between loops
+wait_seconds_after=30
 ```
 
 ## tables on database example mariadb/mysql

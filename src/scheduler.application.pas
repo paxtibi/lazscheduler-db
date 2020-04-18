@@ -7,7 +7,10 @@ unit scheduler.application;
 interface
 
 uses
-  Classes, SysUtils, CustApp, ZDbcIntfs, fgl;
+  Classes, SysUtils, CustApp, ZDbcIntfs
+  // , fgl
+  ;
+
 
 type
   TJobRecord = class
@@ -22,7 +25,6 @@ type
     errString: string;
   end;
 
-  TJobRecordList = specialize TFPGList<TJobRecord>;
 
   { TJob }
   TJob = class(TThread)
@@ -54,6 +56,10 @@ type
     FExecuteAfterConnection: string;
   private
     FConnectionString: string;
+    FMaxLoops: integer;
+    FScanLoops: integer;
+    FWaitSecondsAfter: integer;
+
     procedure loadJobsToRun;
     procedure bindDatabase;
   protected
@@ -64,6 +70,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     property ConnectionString: string read FConnectionString;
+
+    property MaxLoops: integer read FMaxLoops write FMaxLoops;
+    property WaitSecondsAfter: integer read FWaitSecondsAfter write FWaitSecondsAfter;
   end;
 
 var
@@ -169,8 +178,40 @@ var
   stderrnumbytes, stderrbytesread: integer;
   outputstring: string;
   stderrstring: string;
+
+
+    procedure _ReadStandardOutput;
+    begin
+
+      if (BytesRead + available > outputlength) then
+      begin
+        outputlength := BytesRead + READ_BYTES;
+        Setlength(outputstring, outputlength);
+      end;
+      NumBytes := p.Output.Read(outputstring[1 + bytesread], available);
+      if NumBytes > 0 then
+        Inc(BytesRead, NumBytes);
+
+    end;
+
+    procedure _ReadStandardError;
+    begin
+      available := P.StdErr.NumBytesAvailable;
+      if (StderrBytesRead + available > stderrlength) then
+      begin
+        stderrlength := StderrBytesRead + READ_BYTES;
+        Setlength(stderrstring, stderrlength);
+      end;
+      StderrNumBytes := p.StdErr.Read(stderrstring[1 + StderrBytesRead], available);
+      if StderrNumBytes > 0 then
+        Inc(StderrBytesRead, StderrNumBytes);
+    end;
+
 begin
   FConnection := DriverManager.GetConnection(Application.connectionString);
+
+  outputstring:='';
+  stderrstring:='';
 
   try
     p := TProcess.Create(nil);
@@ -183,36 +224,29 @@ begin
       outputlength := 0;
       stderrbytesread := 0;
       stderrlength := 0;
-      p.Execute;
-      FJob.pid := P.ProcessID;
-      setRunningProcess(FJob);
-      if (FonStart <> nil) then
-        FonStart(Self);
-      while p.Running do
+      try
+         p.Execute;
+         FJob.pid := P.ProcessID;
+         setRunningProcess(FJob);
+         if (FonStart <> nil) then
+           FonStart(Self);
+      except
+        on e: exception do begin
+           stderrstring:=e.Message;
+           FJob.pid:=-1;
+        end;
+      end;
+
+      while (FJob.pid>=0) and ( p.Running ) do
       begin
         available := P.Output.NumBytesAvailable;
         if available > 0 then
         begin
-          if (BytesRead + available > outputlength) then
-          begin
-            outputlength := BytesRead + READ_BYTES;
-            Setlength(outputstring, outputlength);
-          end;
-          NumBytes := p.Output.Read(outputstring[1 + bytesread], available);
-          if NumBytes > 0 then
-            Inc(BytesRead, NumBytes);
+          _ReadStandardOutput;
         end
         else if assigned(P.stderr) and (P.StdErr.NumBytesAvailable > 0) then
         begin
-          available := P.StdErr.NumBytesAvailable;
-          if (StderrBytesRead + available > stderrlength) then
-          begin
-            stderrlength := StderrBytesRead + READ_BYTES;
-            Setlength(stderrstring, stderrlength);
-          end;
-          StderrNumBytes := p.StdErr.Read(stderrstring[1 + StderrBytesRead], available);
-          if StderrNumBytes > 0 then
-            Inc(StderrBytesRead, StderrNumBytes);
+          _ReadStandardError;
         end
         else
           Sleep(100);
@@ -220,60 +254,64 @@ begin
       available := P.Output.NumBytesAvailable;
       while available > 0 do
       begin
-        if (BytesRead + available > outputlength) then
-        begin
-          outputlength := BytesRead + READ_BYTES;
-          Setlength(outputstring, outputlength);
-        end;
-        NumBytes := p.Output.Read(outputstring[1 + bytesread], available);
-        if NumBytes > 0 then
-          Inc(BytesRead, NumBytes);
+        _ReadStandardOutput;
         available := P.Output.NumBytesAvailable;
       end;
       setlength(outputstring, BytesRead);
       while assigned(P.stderr) and (P.Stderr.NumBytesAvailable > 0) do
       begin
-        available := P.Stderr.NumBytesAvailable;
-        if (StderrBytesRead + available > stderrlength) then
-        begin
-          stderrlength := StderrBytesRead + READ_BYTES;
-          Setlength(stderrstring, stderrlength);
-        end;
-        StderrNumBytes := p.StdErr.Read(stderrstring[1 + StderrBytesRead], available);
-        if StderrNumBytes > 0 then
-          Inc(StderrBytesRead, StderrNumBytes);
+        _ReadStandardError;
       end;
       setlength(stderrstring, StderrBytesRead);
       FJob.return_code := p.exitstatus;
     except
-      on e: Exception do
-      begin
-        setlength(outputstring, BytesRead);
-        raise;
-      end;
+      on e: exception do
+         begin
+           setlength(outputstring, BytesRead);
+           raise;
+         end;
     end;
   finally
     p.Free;
   end;
   FJob.errString := stderrstring;
   FJob.outString := outputstring;
+
   if OnTerminate <> nil then
   begin
-    OnTerminate(self);
     setExitStatus(FJob);
+    OnTerminate(self);
   end;
+
+  // free resources
+  FConnection:=nil;
   FreeAndNil(FJob);
   Terminate;
+  Free;
 end;
 
 { TSchedulerApplication }
 
 procedure TSchedulerApplication.DoRun;
 begin
+
+  if FMaxLoops > 0 then
+     WriteLn('Loop ', FScanLoops);
+
   loadJobsToRun;
-  sleep(1000 * 30);
-  if FConnection.IsClosed then
-    terminate;
+  inc(FScanLoops);
+
+  if FMaxLoops > 0 then
+     if FScanLoops>=FMaxLoops then begin
+        writeln('closing connection...');
+        FConnection.Close;
+     end;
+
+  sleep(1000 * WaitSecondsAfter);
+  if FConnection.IsClosed then begin
+     FConnection:=nil;
+     terminate;
+  end;
 end;
 
 procedure TSchedulerApplication.onStart(Sender: TObject);
@@ -287,6 +325,11 @@ end;
 constructor TSchedulerApplication.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
+  FMaxLoops:=-1; // -1 = forever
+  FScanLoops:=0;
+  FWaitSecondsAfter:=30;
+
   InitCriticalSection(FCS);
   bindDatabase;
 end;
@@ -302,26 +345,20 @@ var
   Rs: IZResultSet;
   P: IZPreparedStatement;
   J: TJob;
-  jr: TJobRecord;
-  jl: TJobRecordList;
 begin
+
   p := FConnection.PrepareStatement(Format('SELECT * FROM %sscheduler_next', [FTablePrefix]));
   rs := P.ExecuteQueryPrepared;
-  jl := TJobRecordList.Create;
+
   while rs.Next do
   begin
-    jr := cast(rs);
-    jl.add(jr);
-  end;
-  for jr in jl do
-  begin
-    J := TJob.Create(jr);
+    J := TJob.Create(cast(rs));
     J.onStart := @onStart;
     J.OnTerminate := @onTerminate;
     J.Start;
     sleep(100);
   end;
-  FreeAndNil(jl);
+
   rs := nil;
   p := nil;
 
@@ -347,6 +384,19 @@ begin
     FParallelLevel := word.Parse(Trim(sl.Values['parallel']));
   except
   end;
+
+  FMaxLoops:=-1; // forever
+  try
+    FMaxLoops := Integer.Parse(Trim(sl.Values['maxloops']));
+  except
+  end;
+
+  FWaitSecondsAfter:=30;
+  try
+    FWaitSecondsAfter := word.Parse(Trim(sl.Values['wait_seconds_after']));
+  except
+  end;
+
   FExecuteAfterConnection := sl.Values['execute-after-connection'];
   FTablePrefix := sl.Values['table-prefix'];
   FreeAndNil(SL);
