@@ -49,6 +49,8 @@ CREATE TABLE `<table-prefix>scheduler_job_log` (
 )
 COLLATE='utf8_general_ci'
 ENGINE=MyISAM;
+
+
 create or replace view <table-prefix>scheduler_next as
   select 
         `<table-prefix>scheduler`.`id` AS `id`,
