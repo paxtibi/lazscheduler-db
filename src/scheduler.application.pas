@@ -13,6 +13,11 @@ uses
 
 
 type
+
+  TReschedulerTimeScale = (Undefined, TimeScaleYears, TimeScaleMonths, TimeScaleDays,
+                           TimeScaleHours, TimeScaleMinutes, TimeScaleSeconds);
+
+
   TJobRecord = class
     id: uint64;
     command: string;
@@ -23,7 +28,11 @@ type
     pid: integer;
     outString: string;
     errString: string;
+    resched_timescale: TReschedulerTimeScale;
+    resched_quantity: integer;
   end;
+
+
 
 
   { TJob }
@@ -39,6 +48,7 @@ type
   protected
     procedure setRunningProcess(j: TJobRecord);
     procedure setExitStatus(j: TJobRecord);
+    procedure setReschedulateProcess(j: TJobRecord);
   public
     property Job: TJobRecord read FJob;
     property onStart: TNotifyEvent read FonStart write SetonStart;
@@ -89,6 +99,7 @@ var
 
 
 function cast(Source: IZResultSet): TJobRecord;
+var s: string;
 begin
   Result := TJobRecord.Create;
   Result.id := Source.GetULongByName('id');
@@ -97,6 +108,21 @@ begin
   Result.scheduled_at := Source.GetDateByName('scheduled_at');
   Result.parameters := Source.GetUTF8StringByName('parameters');
   Result.return_code := Source.GetIntByName('return_code');
+
+
+  s := Uppercase(Trim(Source.GetUTF8StringByName('resched_timescale')))+' ';
+  case s[1] of
+     'Y': Result.resched_timescale := TimeScaleYears;
+     'M': Result.resched_timescale := TimeScaleMonths;
+     'D': Result.resched_timescale := TimeScaleDays;
+     'H': Result.resched_timescale := TimeScaleHours;
+     'N': Result.resched_timescale := TimeScaleMinutes;
+     'S': Result.resched_timescale := TimeScaleSeconds;
+  else
+     Result.resched_timescale := Undefined;
+  end;
+
+  Result.resched_quantity := Source.GetIntByName('resched_value');
 end;
 
 const
@@ -167,6 +193,51 @@ begin
   P := nil;
 
   LeaveCriticalsection(FCS);
+end;
+
+procedure TJob.setReschedulateProcess(j: TJobRecord);
+const ReschedSQL =
+        'insert into oc_scheduler (                ' +
+        '       `command`,    `running`,           ' +
+        '       `done`,       `scheduled_at`,      ' +
+        '       `parameters`, `created`,           ' +
+        '       `update`,     `resched_timescale`, ' +
+        '       `resched_value` )                  ' +
+        'select `command`,    0,                   ' +
+        '       0,            (`scheduled_at` + INTERVAL <VALUE> <TIMESCALE>),  ' +
+        '       `parameters`, now(),               ' +
+        '       now(),        `resched_timescale`, ' +
+        '       `resched_value`                    ' +
+        'from %sscheduler where id = ?             ';
+var
+   P: IZPreparedStatement;
+   s: string;
+begin
+   EnterCriticalsection(FCS);
+   try
+     s:=Format(ReschedSQL, [FTablePrefix]);
+     case j.resched_timescale of
+        TimeScaleYears  : s:=StringReplace(s, '<TIMESCALE>', 'YEAR', []);
+        TimeScaleMonths : s:=StringReplace(s, '<TIMESCALE>', 'MONTH', []);
+        TimeScaleDays   : s:=StringReplace(s, '<TIMESCALE>', 'DAY', []);
+        TimeScaleHours  : s:=StringReplace(s, '<TIMESCALE>', 'HOUR', []);
+        TimeScaleMinutes: s:=StringReplace(s, '<TIMESCALE>', 'MINUTE', []);
+        TimeScaleSeconds: s:=StringReplace(s, '<TIMESCALE>', 'SECOND', []);
+     end;
+     s:=StringReplace(s, '<VALUE>', j.resched_quantity.ToString, []);
+
+     // writeln('SQL: ', s);
+     FConnection.PingServer;
+     P := FConnection.PrepareStatement(s);
+     P.SetLong(1, j.id);
+     try
+        P.ExecutePrepared;
+     except
+     end;
+   finally
+     P := nil;
+     LeaveCriticalsection(FCS);
+   end;
 end;
 
 procedure TJob.Execute;
@@ -279,6 +350,8 @@ begin
 
   if OnTerminate <> nil then
   begin
+    if FJob.resched_timescale <> Undefined then
+       setReschedulateProcess(FJob);
     setExitStatus(FJob);
     OnTerminate(self);
   end;

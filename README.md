@@ -29,6 +29,8 @@ CREATE TABLE `<table-prefix>scheduler` (
   `RETURN_CODE` INT(11) NULL DEFAULT NULL,
   `created` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `update` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `resched_timescale` VarChar( 1 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `resched_value` Int( 11 ) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 )
 COLLATE='utf8_general_ci'
@@ -63,13 +65,40 @@ create or replace view <table-prefix>scheduler_next as
         `<table-prefix>scheduler`.`done` AS `done`,
         `<table-prefix>scheduler`.`scheduled_at` AS `scheduled_at`,
         `<table-prefix>scheduler`.`parameters` AS `parameters`,
-        `<table-prefix>scheduler`.`RETURN_CODE` AS `RETURN_CODE` 
+        `<table-prefix>scheduler`.`RETURN_CODE` AS `RETURN_CODE`, 
+        `<table-prefix>scheduler`.`resched_timescale` AS `resched_timescale`,
+        `<table-prefix>scheduler`.`resched_value` AS `resched_value`
   from 
 	      `<table-prefix>scheduler` 
  where 
          `<table-prefix>scheduler`.`done` = 0
     and  `<table-prefix>scheduler`.`scheduled_at` < now()
-    and  `<table-prefix>scheduler`.`running` = 0)
+    and  `<table-prefix>scheduler`.`running` = 0
 
 ```
+
+
+## notes on "table-prefix"scheduler
+
+Fields **resched_timescale** and **resched_value** are used to schedulate again a process during execution.
+**resched_timescale** identifies the type of value represented by **resched_value**.
+
+Values for **resched_timescale**:
+
+- Y = years
+- M = months
+- D = days
+- H = hours
+- N = minutes
+- S = seconds
+
+Example:
+If **resched_timescale** is "H" and **resched_value** is 8, then current process will be scheduled again in 8 hours.
+
+
+
+
+
+
+
 [more info](./docs/index.md)
